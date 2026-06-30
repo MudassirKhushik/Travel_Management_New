@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TravelCraft Tours</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #ec3b3b;
+      color: white;
+      margin-top: 2rem;
+      font-size: 0.9em;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 100vh;
+      background-image: url('assets/background.jpg');
+      background-size: cover;
+      background-position: center;
+      padding-bottom: 50px;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 450px;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 1.5rem;
+      max-width: 180px;
+      height: auto;
+    }
+
+    .login-box h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 2rem;
+      font-size: 2em;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.6rem;
+      color: #34495e;
+      font-weight: 600;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: calc(100% - 20px);
+      padding: 0.9rem 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: #ec3b3b;
+      box-shadow: 0 0 0 3px rgba(236, 59, 59, 0.2);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #ec3b3b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      background-color: #d43434;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .app-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2.5rem;
+      background-color: white;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-sizing: border-box;
+    }
+
+    .app-container header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+
+    .app-container header .logo {
+      max-width: 120px;
+      margin-bottom: 1rem;
+    }
+
+    .app-container h1 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+      font-size: 2.2em;
+    }
+
+    .form-section {
+      background-color: #fcfcfc;
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-section h2 {
+      color: #3498db;
+      margin-top: 0;
+      margin-bottom: 1.8rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid #3498db;
+      font-size: 1.6em;
+      font-weight: 700;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .form-actions button {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1.15rem;
+    }
+
+    .generate-pdf {
+      background-color: #27ae60;
+    }
+
+    .generate-pdf:hover {
+      background-color: #219653;
+    }
+
+    .reset-form {
+      background-color: #e74c3c;
+    }
+
+    .reset-form:hover {
+      background-color: #c0392b;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      
+      .app-container {
+        padding: 1.5rem;
+        margin: 1rem;
+        border-radius: 8px;
+      }
+
+      .login-box {
+        padding: 1.8rem;
+        margin: 0 1rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-box h1 {
+        font-size: 1.8em;
+      }
+      .app-container h1 {
+        font-size: 1.8em;
+      }
+      .form-section h2 {
+        font-size: 1.4em;
+      }
+    }
+
+    .add-hotel {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-right: 0.5rem;
+      margin-top: 0.5rem;
+      width: 25%;
+    }
+
+    .add-hotel:hover {
+      background-color: #2980b9;
+    }
+
+    .hotel-section {
+      background-color: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #dee2e6;
+      position: relative;
+    }
+
+    .remove-hotel {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      margin-top: 0.5rem;
+      width: 25%;
+    }
+
+    .remove-hotel:hover {
+      background-color: #c0392b;
+    }
+
+    #airportGroup {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      width: 50%;
+    }
+
+    #grandTotal, #profitAmount {
+      font-weight: bold;
+      font-size: 1.1rem;
+      background-color: #f8f9fa;
+      width: 30%;
+    }
+
+    .hotel-section {
+      page-break-inside: avoid;
+    }
+
+    .hotel-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .hotel-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    @media print {
+      @page {
+        size: legal portrait;
+        margin: 1in;
+      }
+
+      body {
+        font-size: 12px;
+      }
+
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <div class="login-container" id="loginContainer">
+    <div class="login-box">
+      <img src="assets/logo.png" alt="TravelCraft Tours Logo" class="logo" />
+      <h1>TravelCraft Tours</h1>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-container" id="appContainer" style="display: none;">
+    <header>
+      <img src="assets/logo.png" alt="TravelCraft Tours Logo" class="logo" />
+      <h1>TravelCraft Tours Booking Form</h1>
+    </header>
+
+    <form id="bookingForm">
+      <!-- Travel Details -->
+      <div class="form-section">
+        <h2>Travel Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Guest Name</label>
+            <input type="text" id="name" required />
+          </div>
+          <div class="form-group">
+            <label for="whatsapp">Phone (WhatsApp)</label>
+            <input type="text" id="whatsapp" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nationality">Nationality</label>
+            <input type="text" id="nationality" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="adults">No. of Adults</label>
+            <input type="number" id="adults" value="1" required />
+          </div>
+          <div class="form-group">
+            <label for="children">No. of Children</label>
+            <input type="number" id="children" value="0" required />
+          </div>
+          <div class="form-group">
+            <label for="infants">No. of Infants</label>
+            <input type="number" id="infants" value="0" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Passport Details -->
+      <div class="form-section">
+        <h2>Passport Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="passportNumber">Passport Number</label>
+            <input type="text" id="passportNumber" required />
+          </div>
+          <div class="form-group">
+            <label for="passportExpiry">Passport Expiry Date</label>
+            <input type="date" id="passportExpiry" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="passportIssueDate">Passport Issue Date</label>
+            <input type="date" id="passportIssueDate" required />
+          </div>
+          <div class="form-group">
+            <label for="passportIssuePlace">Passport Issue Place</label>
+            <input type="text" id="passportIssuePlace" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Visa Details -->
+      <div class="form-section">
+        <h2>Visa Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="visaType">Visa Type</label>
+            <select id="visaType" required>
+              <option value="">Select</option>
+              <option value="Tourist">Tourist</option>
+              <option value="Business">Business</option>
+              <option value="Transit">Transit</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="visaStatus">Visa Status</label>
+            <select id="visaStatus" required>
+              <option value="">Select</option>
+              <option value="Applied">Applied</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Not Required">Not Required</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="visaApplicationDate">Visa Application Date</label>
+            <input type="date" id="visaApplicationDate" />
+          </div>
+          <div class="form-group">
+            <label for="visaExpiryDate">Visa Expiry Date</label>
+            <input type="date" id="visaExpiryDate" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Flight Details -->
+      <div class="form-section">
+        <h2>Flight Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="carrier">Carrier Name</label>
+            <input type="text" id="carrier" required />
+          </div>
+          <div class="form-group">
+            <label for="flightNumber">Flight No.</label>
+            <input type="text" id="flightNumber" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="departureDate">Departure Date</label>
+            <input type="date" id="departureDate" required />
+          </div>
+          <div class="form-group">
+            <label for="arrivalDate">Arrival Date</label>
+            <input type="date" id="arrivalDate" required />
+          </div>
+          <div class="form-group">
+            <label for="totalDays">Total Days</label>
+            <input type="number" id="totalDays" readonly />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="flightType">Flight Type</label>
+            <select id="flightType" required>
+              <option value="">Select</option>
+              <option value="Direct">Direct</option>
+              <option value="Indirect">Indirect</option>
+            </select>
+          </div>
+          <div class="form-group" id="routeGroup" style="display: none;">
+            <label for="route">Route (if via)</label>
+            <input type="text" id="route" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Accommodation Details -->
+      <div class="form-section">
+        <h2>Accommodation Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <button type="button" id="addHotel" class="add-hotel">Add Hotel</button>
+          </div>
+        </div>
+        <div id="hotelSections">
+          <!-- Hotel sections will be added here dynamically -->
+        </div>
+      </div>
+
+      <!-- Transport Details -->
+      <div class="form-section">
+        <h2>Transport Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vehicle">Vehicle Name</label>
+            <input type="text" id="vehicle" required />
+          </div>
+          <div class="form-group">
+            <label for="seats">No. of Seats</label>
+            <input type="number" id="seats" required />
+          </div>
+          <div class="form-group">
+            <label for="sector">Sector</label>
+            <input type="text" id="sector" required />
+          </div>
+          <div class="form-group">
+            <label for="transfer">Airport Transfer</label>
+            <select id="transfer" required>
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" id="airportGroup" style="display: none;">
+          <div class="form-group">
+            <label for="airport">Airport Name</label>
+            <input type="text" id="airport" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Details -->
+      <div class="form-section">
+        <h2>Pricing Details</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="adultPrice">Adult Price (per person)</label>
+            <input type="number" id="adultPrice" required />
+          </div>
+          <div class="form-group">
+            <label for="childPrice">Child Price (per person)</label>
+            <input type="number" id="childPrice" required />
+          </div>
+          <div class="form-group">
+            <label for="infantPrice">Infant Price (per person)</label>
+            <input type="number" id="infantPrice" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="grandTotal">Grand Total</label>
+            <input type="number" id="grandTotal" readonly />
+          </div>
+          <div class="form-group">
+            <label for="costPrice">Cost Price</label>
+            <input type="number" id="costPrice" required />
+          </div>
+          <div class="form-group">
+            <label for="profitPercentage">Profit Percentage</label>
+            <input type="number" id="profitPercentage" value="15" required />
+          </div>
+          <div class="form-group">
+            <label for="profitAmount">Profit Amount</label>
+            <input type="number" id="profitAmount" readonly />
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes Section -->
+      <div class="form-section">
+        <h2>Additional Notes</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="notes">Special Instructions or Notes</label>
+            <textarea id="notes" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="submit" class="generate-pdf">Generate PDF</button>
+        <button type="reset" class="reset-form">Reset Form</button>
+      </div>
+    </form>
+  </div>
+
+  <footer>
+    <p>House No. B 10, Al Mustafa Town phase 2 Qasimabad, Hyderabad<br />
+    <a href="mailto:travelcraftstours@gmail.com">travelcraftstours@gmail.com</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const today = new Date().toISOString().split('T')[0];
+
+      document.getElementById('adults').value = 1;
+      document.getElementById('children').value = 0;
+      document.getElementById('infants').value = 0;
+
+      document.getElementById('departureDate').addEventListener('change', calculateTotalDays);
+      document.getElementById('arrivalDate').addEventListener('change', calculateTotalDays);
+
+      document.getElementById('flightType').addEventListener('change', function () {
+        const routeGroup = document.getElementById('routeGroup');
+        routeGroup.style.display = this.value === 'Indirect' ? 'block' : 'none';
+        if (this.value !== 'Indirect') {
+          document.getElementById('route').value = '';
+        }
+      });
+
+      document.getElementById('transfer').addEventListener('change', function () {
+        const airportGroup = document.getElementById('airportGroup');
+        airportGroup.style.display = this.value === 'Yes' ? 'block' : 'none';
+        if (this.value !== 'Yes') {
+          document.getElementById('airport').value = '';
+        }
+      });
+
+      document.getElementById('adultPrice').addEventListener('input', calculateTotal);
+      document.getElementById('childPrice').addEventListener('input', calculateTotal);
+      document.getElementById('infantPrice').addEventListener('input', calculateTotal);
+      document.getElementById('adults').addEventListener('input', calculateTotal);
+      document.getElementById('children').addEventListener('input', calculateTotal);
+      document.getElementById('infants').addEventListener('input', calculateTotal);
+      
+      document.getElementById('costPrice').addEventListener('input', calculateProfit);
+      document.getElementById('profitPercentage').addEventListener('input', calculateProfit);
+      document.getElementById('grandTotal').addEventListener('input', calculateProfit);
+
+      document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        if (email === "travelcraftstours@gmail.com" && password === "abdul123") {
+          document.getElementById('loginContainer').style.display = 'none';
+          document.getElementById('appContainer').style.display = 'block';
+          addHotelSection();
+          calculateNights(1);
+        } else {
+          alert('Invalid credentials. Please try again.');
+        }
+      });
+
+      document.getElementById('bookingForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        generatePDF();
+      });
+
+      document.getElementById('addHotel').addEventListener('click', addHotelSection);
+    });
+
+    let hotelCount = 0;
+
+    function addHotelSection() {
+      hotelCount++;
+      const hotelSections = document.getElementById('hotelSections');
+      const hotelSection = document.createElement('div');
+      hotelSection.className = 'hotel-section';
+      hotelSection.id = `hotel-${hotelCount}`;
+
+      hotelSection.innerHTML = `
+        <button type="button" class="remove-hotel" onclick="removeHotelSection('hotel-${hotelCount}')">Remove</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city-${hotelCount}">City</label>
+            <input type="text" id="city-${hotelCount}" required />
+          </div>
+          <div class="form-group">
+            <label for="hotelName-${hotelCount}">Hotel Name</label>
+            <input type="text" id="hotelName-${hotelCount}" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="rooms-${hotelCount}">No. of Rooms</label>
+            <input type="number" id="rooms-${hotelCount}" min="1" value="1" required />
+          </div>
+          <div class="form-group">
+            <label for="roomType-${hotelCount}">Room Type</label>
+            <input type="text" id="roomType-${hotelCount}" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="checkIn-${hotelCount}">Check-in Date</label>
+            <input type="date" id="checkIn-${hotelCount}" required />
+          </div>
+          <div class="form-group">
+            <label for="checkOut-${hotelCount}">Check-out Date</label>
+            <input type="date" id="checkOut-${hotelCount}" required />
+          </div>
+          <div class="form-group">
+            <label for="nights-${hotelCount}">No. of Nights</label>
+            <input type="number" id="nights-${hotelCount}" readonly />
+          </div>
+        </div>
+      `;
+
+      hotelSections.appendChild(hotelSection);
+
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      const dayAfterTomorrow = new Date(tomorrow);
+      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 1);
+
+      document.getElementById(`checkIn-${hotelCount}`).value = tomorrow.toISOString().split('T')[0];
+      document.getElementById(`checkOut-${hotelCount}`).value = dayAfterTomorrow.toISOString().split('T')[0];
+
+      document.getElementById(`checkIn-${hotelCount}`).addEventListener('change', function () {
+        calculateNights(hotelCount);
+      });
+      document.getElementById(`checkOut-${hotelCount}`).addEventListener('change', function () {
+        calculateNights(hotelCount);
+      });
+
+      calculateNights(hotelCount);
+    }
+
+    function removeHotelSection(id) {
+      if (hotelCount > 1) {
+        const section = document.getElementById(id);
+        section.parentNode.removeChild(section);
+        hotelCount--;
+      } else {
+        alert('You must have at least one hotel section.');
+      }
+    }
+
+    function calculateNights(hotelNumber) {
+      const checkIn = document.getElementById(`checkIn-${hotelNumber}`).value;
+      const checkOut = document.getElementById(`checkOut-${hotelNumber}`).value;
+      if (checkIn && checkOut) {
+        const diff = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+        document.getElementById(`nights-${hotelNumber}`).value = (diff > 0 ? diff : 0) + 1;
+      }
+    }
+
+    function calculateTotalDays() {
+      const departureDate = document.getElementById('departureDate').value;
+      const arrivalDate = document.getElementById('arrivalDate').value;
+      if (departureDate && arrivalDate) {
+        const diff = Math.ceil((new Date(arrivalDate) - new Date(departureDate)) / (1000 * 60 * 60 * 24));
+        document.getElementById('totalDays').value = (diff > 0 ? diff : 0) + 1;
+      }
+    }
+
+    function calculateTotal() {
+      const adults = parseInt(document.getElementById('adults').value) || 0;
+      const children = parseInt(document.getElementById('children').value) || 0;
+      const infants = parseInt(document.getElementById('infants').value) || 0;
+      const adultPrice = parseFloat(document.getElementById('adultPrice').value) || 0;
+      const childPrice = parseFloat(document.getElementById('childPrice').value) || 0;
+      const infantPrice = parseFloat(document.getElementById('infantPrice').value) || 0;
+
+      const total = (adults * adultPrice) + (children * childPrice) + (infants * infantPrice);
+      document.getElementById('grandTotal').value = total.toFixed(2);
+      calculateProfit();
+    }
+
+    function calculateProfit() {
+      const grandTotal = parseFloat(document.getElementById('grandTotal').value) || 0;
+      const costPrice = parseFloat(document.getElementById('costPrice').value) || 0;
+      const profitPercentage = parseFloat(document.getElementById('profitPercentage').value) || 0;
+      
+      const profitAmount = grandTotal - costPrice;
+      document.getElementById('profitAmount').value = profitAmount.toFixed(2);
+    }
+
+    function formatDate(dateString) {
+      if (dateString === 'N/A' || !dateString) return 'N/A';
+      const date = new Date(dateString);
+      const dd = String(date.getDate()).padStart(2, '0');
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const yy = String(date.getFullYear()).slice(2);
+      return `${dd}/${mm}/${yy}`;
+    }
+
+    function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+      try {
+        const logoBase64 = '../assets/logo.png';
+        doc.addImage(logoBase64, 'PNG', 15, 10, 30, 20);
+      } catch (e) {
+        console.error("Logo not loaded:", e);
+      }
+
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('TRAVELCRAFT TOURS', 105, 15, { align: 'center' });
+      doc.setFontSize(12);
+      doc.text('Booking Confirmation', 105, 22, { align: 'center' });
+
+      let y = 30;
+
+      doc.setFontSize(11);
+      doc.setTextColor(50, 100, 150);
+      doc.text('TRAVEL DETAILS', 20, y);
+      doc.autoTable({
+        startY: y + 3,
+        head: [['Field', 'Value']],
+        body: [
+          ['Guest Name', getValue('name')],
+          ['Nationality', getValue('nationality')],
+          ['Phone (WhatsApp)', getValue('whatsapp')],
+          ['No. of Adults', getValue('adults')],
+          ['No. of Children', getValue('children')],
+          ['No. of Infants', getValue('infants')]
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [50, 100, 150], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('PASSPORT DETAILS', 20, y);
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Field', 'Value']],
+        body: [
+          ['Passport Number', getValue('passportNumber')],
+          ['Passport Expiry Date', formatDate(getValue('passportExpiry'))],
+          ['Passport Issue Date', formatDate(getValue('passportIssueDate'))],
+          ['Passport Issue Place', getValue('passportIssuePlace')]
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [100, 100, 150], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('VISA DETAILS', 20, y);
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Field', 'Value']],
+        body: [
+          ['Visa Type', getValue('visaType')],
+          ['Visa Status', getValue('visaStatus')],
+          ['Visa Application Date', formatDate(getValue('visaApplicationDate'))],
+          ['Visa Expiry Date', formatDate(getValue('visaExpiryDate'))]
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [150, 100, 150], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('FLIGHT DETAILS', 20, y);
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Field', 'Value']],
+        body: [
+          ['Carrier Name', getValue('carrier')],
+          ['Flight No.', getValue('flightNumber')],
+          ['Departure Date', formatDate(getValue('departureDate'))],
+          ['Arrival Date', formatDate(getValue('arrivalDate'))],
+          ['Total Days', getValue('totalDays')],
+          ['Flight Type', getValue('flightType')],
+          ['Route', getValue('flightType') === 'Indirect' ? getValue('route') : 'N/A']
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [230, 126, 34], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('ACCOMMODATION DETAILS', 20, y);
+      const hotelData = [];
+
+      for (let i = 1; i <= hotelCount; i++) {
+        const hotelName = getValue(`hotelName-${i}`) || 'N/A';
+        const city = getValue(`city-${i}`) || 'N/A';
+        const rooms = getValue(`rooms-${i}`) || 'N/A';
+        const roomType = getValue(`roomType-${i}`) || 'N/A';
+        const checkIn = getValue(`checkIn-${i}`) || 'N/A';
+        const checkOut = getValue(`checkOut-${i}`) || 'N/A';
+        const nights = getValue(`nights-${i}`) || '0';
+
+        const nightInfo = `${nights} (${formatDate(checkIn)} - ${formatDate(checkOut)})`;
+
+        hotelData.push(
+          [`Hotel ${i} Name`, hotelName],
+          [`City ${i}`, city],
+          [`Rooms ${i}`, rooms],
+          [`Room Type ${i}`, roomType],
+          [`Nights ${i}`, nightInfo],
+          ['', '']
+        );
+      }
+
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Field', 'Value']],
+        body: hotelData,
+        theme: 'grid',
+        headStyles: { fillColor: [52, 152, 219], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('TRANSPORT DETAILS', 20, y);
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Field', 'Value']],
+        body: [
+          ['Vehicle Name', getValue('vehicle')],
+          ['No. of Seats', getValue('seats')],
+          ['Sector', getValue('sector')],
+          ['Airport Transfer', getValue('transfer')]
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [46, 204, 113], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      if (getValue('transfer') === 'Yes') {
+        y = doc.lastAutoTable.finalY + 4;
+        doc.text('AIRPORT TRANSFER', 20, y);
+        doc.autoTable({
+          startY: y + 2,
+          head: [['Field', 'Value']],
+          body: [['Airport Name', getValue('airport') || 'N/A']],
+          theme: 'grid',
+          headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+          styles: { fontSize: 9 },
+          margin: { left: 20, right: 20 }
+        });
+      }
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('PRICING DETAILS', 20, y);
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Field', 'Value']],
+        body: [
+          ['Adult Price (per person)', getValue('adultPrice') ? '$' + parseFloat(getValue('adultPrice')).toFixed(2) : 'N/A'],
+          ['Child Price (per person)', getValue('childPrice') ? '$' + parseFloat(getValue('childPrice')).toFixed(2) : 'N/A'],
+          ['Infant Price (per person)', getValue('infantPrice') ? '$' + parseFloat(getValue('infantPrice')).toFixed(2) : 'N/A'],
+          ['Grand Total', getValue('grandTotal') ? '$' + parseFloat(getValue('grandTotal')).toFixed(2) : 'N/A'],
+          ['Cost Price', getValue('costPrice') ? '$' + parseFloat(getValue('costPrice')).toFixed(2) : 'N/A'],
+          ['Profit Percentage', getValue('profitPercentage') ? getValue('profitPercentage') + '%' : 'N/A'],
+          ['Profit Amount', getValue('profitAmount') ? '$' + parseFloat(getValue('profitAmount')).toFixed(2) : 'N/A']
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [39, 174, 96], textColor: 255 },
+        styles: { fontSize: 9 },
+        margin: { left: 20, right: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 4;
+      doc.text('ADDITIONAL NOTES', 20, y);
+      doc.autoTable({
+        startY: y + 2,
+        head: [['Notes']],
+        body: [[getValue('notes') || 'N/A']],
+        theme: 'grid',
+        headStyles: { fillColor: [149, 165, 166], textColor: 255 },
+        styles: { fontSize: 9, cellWidth: 'wrap' },
+        margin: { left: 20, right: 20 }
+      });
+
+      // Footer
+      const pageCount = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(`House No. B 10, Al Mustafa Town phase 2 Qasimabad, Hyderabad`, 105, 285, { align: 'center' });
+        doc.text(`travelcraftstours@gmail.com`, 105, 290, { align: 'center' });
+        doc.text(`Page ${i} of ${pageCount}`, 195, 290, { align: 'right' });
+      }
+
+      // Save the PDF
+      const guestName = getValue('name') || 'booking';
+      doc.save(`TravelCraftTours_${guestName.replace(/\s+/g, '_')}.pdf`);
+    }
+
+    function getValue(id) {
+      const element = document.getElementById(id);
+      return element ? element.value : '';
+    }
+
+    function formatDate(dateString) {
+      if (dateString === 'N/A' || !dateString) return 'N/A';
+      const date = new Date(dateString);
+      // Check if date is valid
+      if (isNaN(date.getTime())) return 'Invalid Date';
+      const dd = String(date.getDate()).padStart(2, '0');
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const yy = String(date.getFullYear()).slice(2);
+      return `${dd}/${mm}/${yy}`;
+    }
+  </script>
+</body>
+</html>
