@@ -5,7 +5,7 @@ import autoTable from 'jspdf-autotable';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '../hooks/useAuth';
 
 const AddTraveler = ({ isAuthenticated }) => {
