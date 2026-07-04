@@ -54,7 +54,7 @@ export default function VideoSection() {
           playsInline
           poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200"
         >
-          <source src="/promo-video.mp4" type="video/mp4" />
+          <source src="/Videos/promo-video.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8">
           <h2 className="text-3xl font-bold text-white">Discover Your Next Adventure</h2>

@@ -1,7 +1,7 @@
 import Hero from '@/components/public/Hero';
 import VideoSection from '@/components/public/VideoSection';
 import PackageCard from '@/components/public/PackageCard';
-import { supabase } from '@lib/supabase';
+import { supabase } from 'lib/supabaseClient';
 
 // This will fetch from your tenant data
 async function getPackages() {
