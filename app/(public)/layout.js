@@ -1,7 +1,11 @@
-export default function PublicLayout({ children }) {
+import './app/global.css';
+
+export default function RootLayout({ children }) {
   return (
-    <main className="min-h-screen bg-black text-white overflow-x-hidden">
-      {children}
-    </main>
+    <html lang="en">
+      <body className="bg-black text-white min-h-screen">
+        {children}
+      </body>
+    </html>
   );
 }

@@ -11,12 +11,14 @@ export default function VideoSection() {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    if (!videoRef.current) return;
     gsap.fromTo(videoRef.current,
       { opacity: 0, scale: 0.8, y: 100 },
       {
         opacity: 1,
         scale: 1,
         y: 0,
+        x: 0,
         duration: 1.5,
         scrollTrigger: {
           trigger: containerRef.current,
@@ -48,7 +50,7 @@ export default function VideoSection() {
       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
         <video
           ref={videoRef}
-          className="w-full h-auto object-cover"
+          className="w-screen h-screen fixed top-0 left-0 border-none"
           muted
           loop
           playsInline
