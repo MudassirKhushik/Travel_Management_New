@@ -1,144 +1,137 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { supabase } from '@/lib/supabaseClient';
 
-gsap.registerPlugin(ScrollTrigger);
+const DEFAULT_IMAGES = [
+  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200',
+  'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1200',
+  'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200',
+];
 
 export default function Hero() {
-  const containerRef = useRef(null);
-  const canvasRef = useRef(null);
+  const [tenantData, setTenantData] = useState(null);
+  const [currentImage, setCurrentImage] = useState(0);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
+  const ctaRef = useRef(null);
+  const intervalRef = useRef(null); // 👈 Store interval reference
 
   useEffect(() => {
-    // 1. THREE.JS SETUP (3D Particles)
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ 
-      canvas: canvasRef.current,
-      alpha: true,
-      antialias: true 
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Create floating particles
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 2000;
-    const positions = new Float32Array(particlesCount * 3);
-    const colors = new Float32Array(particlesCount * 3);
-
-    for (let i = 0; i < particlesCount * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 10;
-      colors[i] = Math.random() * 0.5 + 0.5; // Warm colors
+    // Fetch tenant data only once
+    async function fetchTenant() {
+      const { data } = await supabase
+        .from('tenants')
+        .select('*')
+        .eq('tenant_id', '011')
+        .single();
+      if (data) {
+        setTenantData(data);
+        // Set initial image if tenant has custom images
+        if (data.hero_images?.length > 0) {
+          setCurrentImage(0);
+        }
+      }
     }
+    fetchTenant();
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.02,
-      transparent: true,
-      opacity: 0.8,
-      vertexColors: true,
-      blending: THREE.AdditiveBlending,
-    });
-
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    camera.position.z = 3;
-
-    // Mouse interaction
-    let mouseX = 0;
-    let mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      
-      particlesMesh.rotation.x += 0.0001;
-      particlesMesh.rotation.y += 0.0002;
-      
-      // Follow mouse
-      particlesMesh.rotation.x += (mouseY - particlesMesh.rotation.x) * 0.02;
-      particlesMesh.rotation.y += (mouseX - particlesMesh.rotation.y) * 0.02;
-      
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // 2. GSAP ANIMATIONS
-    const tl = gsap.timeline({
-      defaults: { ease: 'power3.out' }
-    });
-
+    // GSAP Animations (run once)
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     tl.fromTo(titleRef.current, 
-      { opacity: 0, y: 50, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.5, delay: 0.3 }
+      { opacity: 0, y: 50, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 1.2 }
     )
     .fromTo(subtitleRef.current,
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.2 },
-      '-=0.5'
+      { opacity: 1, y: 0, duration: 0.8 },
+      '-=0.6'
+    )
+    .fromTo(ctaRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6 },
+      '-=0.4'
     );
 
-    // Scroll-triggered animation
-    gsap.to(containerRef.current, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-      },
-      opacity: 0,
-      scale: 0.9,
-    });
+    // Image Carousel - Store interval reference
+    intervalRef.current = setInterval(() => {
+      setCurrentImage((prev) => {
+        const images = tenantData?.hero_images || DEFAULT_IMAGES;
+        return (prev + 1) % images.length;
+      });
+    }, 5000);
 
-    // Cleanup
+    // Cleanup function
     return () => {
-      renderer.dispose();
-      particlesGeometry.dispose();
-      particlesMaterial.dispose();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      tl.kill();
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
-  }, []);
+  }, []); // 👈 Empty dependency array - runs ONCE
+
+  const images = tenantData?.hero_images?.length > 0 ? tenantData.hero_images : DEFAULT_IMAGES;
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative h-screen w-full flex items-center justify-center"
-    >
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 w-full h-full"
-      />
-      
-      <div className="relative z-10 text-center px-4">
-        <h1 
-          ref={titleRef} 
-          className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent"
-        >
-          TravelCraft
-        </h1>
-        <p 
-          ref={subtitleRef}
-          className="text-xl md:text-2xl mt-6 text-gray-300 max-w-2xl mx-auto"
-        >
-          Crafting extraordinary journeys since 2024
-        </p>
-        <button 
-          className="mt-8 px-8 py-3 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-        >
-          Explore Packages →
-        </button>
+    <section className="relative h-screen w-full overflow-hidden pt-20">
+      {/* Background Carousel */}
+      <div className="absolute inset-0">
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentImage ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `url(${img})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 h-full flex items-center px-4 md:px-20">
+        <div className="max-w-3xl">
+          <h1 
+            ref={titleRef} 
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4"
+          >
+            <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              We Craft the Journeys,
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              You Make the Memories
+            </span>
+          </h1>
+          
+          <p 
+            ref={subtitleRef}
+            className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl"
+          >
+            Discover handcrafted travel experiences with personalized itineraries, 
+            expert guides, and unforgettable moments.
+          </p>
+          
+          <button 
+            ref={ctaRef}
+            onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-4 bg-white text-black rounded-full font-medium text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+          >
+            Explore Destinations →
+          </button>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+        <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-white rounded-full mt-2" />
+        </div>
       </div>
     </section>
   );
