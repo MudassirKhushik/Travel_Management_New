@@ -1,4 +1,4 @@
-import Navbar from '@/components/public/Navbar';
+import Navbar from '@/components/public/NavBar';
 import Hero from '@/components/public/Hero';
 import PackagesGrid from '@/components/public/PackagesGrid';
 import NetworkPerks from '@/components/public/NetworkPerks';
